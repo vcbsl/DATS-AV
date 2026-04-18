@@ -227,7 +227,7 @@ class AuxEnsembleExpert(nn.Module):
         F_norm = torch.tanh(torch.full((B,), float(F) / 300.0, device=device, dtype=dtype))
         a_energy = torch.log1p(stft).mean(dim=(1, 2))
         v_energy = x_vis.abs().mean(dim=1)
-        a_std = torch.log1p(stft).std(dim=(1, 2))            # ✅ fixed: keep audio variability
+        a_std = torch.log1p(stft).std(dim=(1, 2))
         feats = torch.stack([p, conf, F_norm, a_energy, v_energy, a_std], dim=-1)
         return feats.to(device)
     def forward(self, faces: torch.Tensor, x_vis: torch.Tensor, stft: torch.Tensor, x_aud: torch.Tensor,
